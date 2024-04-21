@@ -1,0 +1,26 @@
+.card-deck {
+    display: grid;
+    display: grid;
+    grid-template-columns: min-content min-content;
+    grid-template-rows: auto auto auto auto auto;
+    gap: 10px 44px;
+    grid-template-areas:
+        ". ."
+        ". ."
+        ". ."
+        ". ."
+        ". .";
+}
+
+
+@media screen and (max-width: 768px) {
+    .card-deck {
+        grid-template-columns: min-content;
+        grid-template-areas:
+        "."
+        "."
+        "."
+        "."
+        ".";
+    }
+}

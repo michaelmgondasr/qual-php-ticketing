@@ -1,0 +1,100 @@
+<div class="row justify-content-start mt-3">
+
+    <h1>Events List</h1>
+</div>
+
+<ul>
+    <?php foreach ($events as $event) : ?>
+        <li>
+            <div class="container">
+                <div class="row justify-content-start mt-3">
+                    <div class="col-lg-6 d-flex">
+                        <div class="card shadow-lg mb-3">
+                            <img class="card-img-top border-bottom" src="<?= Url::to('@web/images/her2.jpeg') ?>" alt="Card image cap" style="width: 550px; height: 300px;" />
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="card-title"><?= $event['event_name'] ?></h5>
+                                    <a href="<?= Url::to(['site/ticket', 'cardName' => $event['event_name']]) ?>" class="btn btn-primary">
+                                        Book now
+                                    </a>
+                                </div>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <?= $event['date'] ?>
+                                </h6>
+                                <p class="card-text"><?= $event['venue'] ?></p>
+                            </div>
+                        </div>
+                    </div>
+        </li>
+
+    <?php endforeach; ?>
+</ul>
+
+
+
+f**********************rom ticket***********************************************
+
+<?php
+
+/** @var yii\web\View $this */
+/** @var yii\bootstrap5\ActiveForm $form */
+/** @var app\models\ContactForm $model */
+
+use yii\bootstrap5\ActiveForm;
+use yii\bootstrap5\Html;
+
+
+$this->title = 'Ticket';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="site-contact justify-content-center">
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <?php if (Yii::$app->session->hasFlash('ticketFormSubmitted')) : ?>
+
+        <div class="alert alert-success">
+            Thank you for booking with us, your ticket will be shown down below 
+        </div>
+
+        <?php echo $this->renderFile('@app/views/site/ticketObject.php') ?>
+
+
+
+    <?php else : ?>
+
+        <?php if ($cardName !== null) : ?>
+            <h2><?= $cardName ?></h2>
+        <?php endif; ?>
+
+
+        <p>
+            Fill out the following form to book for your ticket.
+            Thank you.
+
+            
+
+        </p>
+
+        <div class="row">
+            <div class="col-lg-5">
+
+                <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
+
+                <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
+
+                <?= $form->field($model, 'email') ?>
+
+                <?= $form->field($model, 'phone') ?>
+
+
+                <div class="form-group">
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                </div>
+
+                <?php ActiveForm::end(); ?>
+
+            </div>
+        </div>
+
+    <?php endif; ?>
+</div>

@@ -227,5 +227,18 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionTesting(){
+
+        $db = new Connection([
+            'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
+            'username' => 'root',
+            'password' => '',
+        ]);
+
+        $events = $db->createCommand('SELECT * FROM events')->queryAll();
+
+        return $this->render('testing', ['events' => $events]);
+    }
+
     
 }

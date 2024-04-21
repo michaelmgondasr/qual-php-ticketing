@@ -4,7 +4,7 @@
 
 use yii\helpers\Url;
 
-$this->title = 'QUal Events';
+$this->title = 'Qual Events';
 ?>
 <div class="container px-lg-5">
     <div id="hero" class="p-4 p-lg-5 bg-light rounded-3 text-center">
@@ -16,40 +16,44 @@ $this->title = 'QUal Events';
     </div>
 
     <section class="pt-5">
-        <div class="container">
-            <p class="container-title">Here are the features<br>we’re proud of</p>
+<div class="row justify-content-start mt-3">
+    <p class="container-title"> Here are some of our </p>
+</div>
 
-            <div class="col-lg6 mb-3">
+<div class="row">
+    <?php foreach ($events as $event) : ?>
 
-                <ul>
-                    <?php foreach ($events as $event) : ?>
-                        <li>
-                            <div class="container">
-                                <div class="row justify-content-start mt-3">
-                                    <div class="col-lg-6 d-flex">
-                                        <div class="card shadow-lg mb-3">
-                                            <img class="card-img-top border-bottom" src="<?= Url::to('@web/images/her2.jpeg') ?>" alt="Card image cap" style="width: 550px; height: 300px;" />
-                                            <div class="card-body">
-                                                <div class="d-flex justify-content-between">
-                                                    <h5 class="card-title"><?= $event['event_name'] ?></h5>
-                                                    <a href="<?= Url::to(['site/ticket', 'cardName' => $event['event_name']]) ?>" class="btn btn-primary">
-                                                        Book now
-                                                    </a>
-                                                </div>
-                                                <h6 class="card-subtitle mb-2 text-muted">
-                                                    <?= $event['date'] ?>
-                                                </h6>
-                                                <p class="card-text"><?= $event['venue'] ?></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                        </li>
+        <?php
+                // Assuming $event['image'] contains the image URL stored in the database
+                $imageUrl = Url::to('@web/images/' . $event['image']);
+                ?>
 
-                    <?php endforeach; ?>
-                </ul>
+        <div class="col-lg-6 mb-3">
+            <div class="card shadow-lg">
+                <img class="card-img-top border-bottom" src="<?= $imageUrl ?>" alt="Card image cap" style="width: auto; height: auto;" />
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title"><?= $event['event_name'] ?></h5>
+                    </div>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                    <i class="bi bi-calendar-date px-2"></i>
+                        <?= $event['date'] ?>
+                    </h6>
+                    <div class='d-flex justify-content-between '>
+                        <p class="card-text d-flex ">
+                        <i class="bi bi-geo-alt px-2"></i>
+                            <?= $event['venue'] ?>
+                        </p>
+                        <a href="<?= Url::to(['site/ticket', 'cardName' => $event['event_name']]) ?>" class="btn btn-primary mr-5">
+                                Book now
+                            </a>
+                    </div>
+                </div>
             </div>
-
         </div>
+    <?php endforeach; ?>
+</div>
+
 
 
 
