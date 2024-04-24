@@ -9,12 +9,11 @@ use yii\bootstrap5\Html;
 use yii\helpers\Url;
 use yii\helpers\HtmlPurifier;
 
-$this->title = 'Sign Up';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="text-start"></div>
 
 <?php
+$this->title = 'event details';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -38,8 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php else : ?>
 
         <?php if ($cardName !== null) : ?>
-            <h2>what this page does</h2>
-
             <!-- card starts here -->
             <?php $form = ActiveForm::begin(['id' => 'ticket-form']); ?>
 

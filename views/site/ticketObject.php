@@ -6,9 +6,7 @@ use yii\helpers\Url;
 
 ?>
 
-<!--
-Inspired by: https://dribbble.com/shots/1166639-Movie-Ticket/attachments/152161
--->
+
 
 <head>
     <meta charset="UTF-8">

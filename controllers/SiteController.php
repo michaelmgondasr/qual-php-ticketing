@@ -204,7 +204,7 @@ class SiteController extends Controller
         $model = new TicketForm();
         if ($model->load(Yii::$app->request->post())) {
             Yii::$app->session->setFlash('ticketFormSubmitted');
-            return $this->actionTicketObject($model->name, $model->email, $cardName);
+            return $this->redirect(['site/ticket-object', 'name' => $model->name, 'email' => $model->email, 'cardName' => $cardName]);
         }
 
         $db = new Connection([
