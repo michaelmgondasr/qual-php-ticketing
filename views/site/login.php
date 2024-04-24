@@ -7,6 +7,7 @@
 
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
+use yii\helpers\Url;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
@@ -37,18 +38,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => "<div class=\"custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
             ]) ?>
 
-            <div class="form-group">
+            <div class="form-group d-flex justify-content-between">
                 <div>
                     <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
                 </div>
+
+                <div>
+                <a href="<?= Url::to(['site/register']) ?>" class="btn btn-primary mr-5">
+                                Sign Up
+                            </a>                </div>
+
             </div>
 
             <?php ActiveForm::end(); ?>
 
-            <div style="color:#999;">
-                You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-                To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-            </div>
 
         </div>
     </div>

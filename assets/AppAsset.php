@@ -23,10 +23,15 @@ class AppAsset extends AssetBundle
         'css/site.css',
         'css/ticket.css',
         'css/styles.css',
-        'css/cards.css'
+        'css/cards.css',
+        'css/showing.css',
+        'css/ticket_text.css',
+        'css/testing.css',
     ];
     public $js = [
         'js/ticket.js',
+        'js/ticket_text.js',
+        'js/testing.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

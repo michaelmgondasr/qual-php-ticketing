@@ -11,13 +11,13 @@ $this->title = 'Qual Events';
         <div class="m-4 m-lg-5">
             <h1 class="display-5 fw-bold">Welcome to Your Ultimate Event Experience!</h1>
             <p class="fs-4">Step into a world of limitless possibilities. Discover and book the hottest events in town with ease. Your unforgettable experience begins here</p>
-            <a class="btn btn-primary btn-lg" href="<?php echo Url::to(['events']) ?>">Call to action</a>
+            <a class="btn btn-primary btn-lg" href="<?php echo Url::to(['events']) ?>">Book now</a>
         </div>
     </div>
 
     <section class="pt-5">
 <div class="row justify-content-start mt-3">
-    <p class="container-title"> Here are some of our </p>
+    <p class="container-title"> Here are some of our Favourite Events</p>
 </div>
 
 <div class="row">
@@ -45,7 +45,7 @@ $this->title = 'Qual Events';
                             <?= $event['venue'] ?>
                         </p>
                         <a href="<?= Url::to(['site/ticket', 'cardName' => $event['event_name']]) ?>" class="btn btn-primary mr-5">
-                                Book now
+                                Details
                             </a>
                     </div>
                 </div>

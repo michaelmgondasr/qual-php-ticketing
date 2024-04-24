@@ -11,6 +11,8 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\TicketForm;
 use app\models\EventForm;
+use app\models\User;
+use app\models\UserRegistrationForm;
 use yii\web\UploadedFile;
 
 use yii\db\Connection;
@@ -72,11 +74,11 @@ class SiteController extends Controller
             'username' => 'root',
             'password' => '',
         ]);
-        
-        $events = $db->createCommand('SELECT * FROM events')
-        ->queryAll();
 
-        return $this->render('index',['events'=>$events]);
+        $events = $db->createCommand('SELECT * FROM events')
+            ->queryAll();
+
+        return $this->render('index', ['events' => $events]);
     }
 
     /**
@@ -86,6 +88,9 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+
+
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -111,6 +116,25 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    /**
+     * Register action
+     * **/
+
+    public function actionRegister()
+    {
+
+        $model = new UserRegistrationForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Registration successful. please login with your new account');
+            return $this->redirect(['site/login']);
+        }
+
+        return $this->render('register', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -155,7 +179,7 @@ class SiteController extends Controller
                 'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
                 'username' => 'root',
                 'password' => '',
-    
+
             ]);
 
             $db->createCommand()->insert('events', [
@@ -182,14 +206,45 @@ class SiteController extends Controller
             Yii::$app->session->setFlash('ticketFormSubmitted');
             return $this->actionTicketObject($model->name, $model->email, $cardName);
         }
+
+        $db = new Connection([
+            'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
+            'username' => 'root',
+            'password' => '',
+        ]);
+
+        // Insert into the tickets table
+        // Check if the user is logged in and Yii::$app->user->identity is not null
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity !== null) {
+            // User is logged in, retrieve the user's information
+            $bookerName = Yii::$app->user->identity->user_name;
+            $bookerEmail = Yii::$app->user->identity->user_email;
+
+            // Insert into the tickets table
+            $db->createCommand()->insert('tickets', [
+                'booker_name' => $bookerName,
+                'booker_email' => $bookerEmail,
+                'booked_event' => $cardName,
+            ])->execute();
+        } else {
+            // User is not logged in, handle the situation accordingly (e.g., redirect to login page)
+            Yii::$app->session->setFlash('error', 'You need to be logged in to book a ticket.');
+            return $this->redirect(['site/login']);
+        }
+
+        // Fetch description for the provided $cardName
+        $description = $db->createCommand('SELECT *  FROM events WHERE event_name = :cardName')
+            ->bindValue(':cardName', $cardName)
+            ->queryOne();
+
         return $this->render('ticket', [
             'model' => $model,
             'layout' => 'tickets_layout',
             'cardName' => $cardName,
-            
-            
+            'description' => $description,
         ]);
     }
+
 
     public function actionEvents()
     {
@@ -206,28 +261,29 @@ class SiteController extends Controller
         // return $this->render('testing');
     }
 
-    public function actionTicketObject($name=null, $email=null, $cardName=null)
+    public function actionTicketObject($name = null, $email = null, $cardName = null)
     {
-        
+
         $db = new Connection([
             'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
             'username' => 'root',
             'password' => '',
         ]);
-        
-        $events = $db->createCommand('SELECT * FROM events')
-        ->queryAll();
-                        
 
-        return $this->render('ticketObject',[
-            'name'=> $name,
-            'email'=> $email,
+        $events = $db->createCommand('SELECT * FROM events')
+            ->queryAll();
+
+
+        return $this->render('ticketObject', [
+            'name' => $name,
+            'email' => $email,
             'events' => $events,
             'cardName' => $cardName,
         ]);
     }
 
-    public function actionTesting(){
+    public function actionTesting()
+    {
 
         $db = new Connection([
             'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
@@ -240,5 +296,17 @@ class SiteController extends Controller
         return $this->render('testing', ['events' => $events]);
     }
 
-    
+    public function actionShowing()
+    {
+
+        $db = new Connection([
+            'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
+            'username' => 'root',
+            'password' => '',
+        ]);
+
+        $tickets = $db->createCommand('SELECT * FROM tickets')->queryAll();
+
+        return $this->render('showing', ['tickets' => $tickets]);
+    }
 }

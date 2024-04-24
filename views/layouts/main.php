@@ -22,6 +22,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
+<!-- header -->
+
 
 <head>
     <meta charset="utf-8" />
@@ -55,41 +57,36 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         ];
 
         if (Yii::$app->user->isGuest) {
-            $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+            $menuItems[] = ['label' => 'Sign in/ Sign up', 'url' => ['/site/login']];
         } else {
+            if (Yii::$app->user->identity->role === 'admin') {
+                $menuItems[] = ['label' => 'Show Tickets', 'url' => ['/site/showing']];
+            }
             $menuItems[] = ['label' => 'Host Event', 'url' => ['/site/posting']];
             $menuItems[] = '<li class="nav-item">'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    'Logout (' . Yii::$app->user->identity->user_name . ')',
                     ['class' => 'nav-link btn btn-link logout']
                 )
                 . Html::endForm()
                 . '</li>';
         }
 
-
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav ml-auto'], // Add ml-auto for left margin
-        ]);
-
-        echo Nav::widget([
-            'options' => ['class' => 'navbar-nav ml-auto'], // Add ml-auto for left margin
-        ]);
-
-        echo Nav::widget([
-            'options' => ['class' => 'navbar-nav mr-auto'],
             'items' => $menuItems,
         ]);
 
-       
-
         NavBar::end();
+
         ?>
 
 
     </header>
+    <!-- header -->
 
+    <!-- body -->
     <main id="main" class="flex-shrink-0" role="main">
         <div class="container">
             <?php if (!empty($this->params['breadcrumbs'])) : ?>
@@ -99,7 +96,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <?= $content ?>
         </div>
     </main>
+    <!-- body  -->
 
+
+    <!-- footer -->
     <footer id="footer" class="mt-auto py-3 bg-dark">
         <div class="container">
             <div class="row text-muted">

@@ -1,0 +1,74 @@
+
+
+
+.container{
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 2rem;
+  overflow: hidden;
+}
+
+h1{
+    padding: 1rem;
+    color: black;
+    text-align: center;
+    font-size: 3rem;
+    position: relative;
+}
+
+
+
+table{
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center
+}
+table thead{ 
+    background-color: #212529;
+    color: #fff;
+    font-size: 1.5rem;
+   
+}
+table th{
+    border: 2px solid #ddd;
+    padding: 14px 12px;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    
+}
+
+table tbody td{
+    border: 2px solid #ddd;
+/*    padding: 15px 12px;*/
+    color: black;
+    font-size: 18px;
+}
+
+
+table tr:nth-child(even)
+{background-color: rgba(237, 237, 237, 0.5);}
+
+table tr:hover {
+    background-color: #36314A,
+}
+
+table tr:hover{
+    text-decoration-skip-ink: #fff;
+}
+
+
+table tbody td a{
+    display: block;
+    padding: 10px; 
+    /*IMPORTANT: padding just for a 
+    so we fill all the A:link cell
+    (delete the padding for td)*/
+     text-decoration: none;
+    color:black;
+    
+}
+table tbody td a:hover{
+    background-color: aqua;
+}
