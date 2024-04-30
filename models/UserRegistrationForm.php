@@ -51,11 +51,7 @@ class UserRegistrationForm extends Model
         return false;
     }
 
-    $db = new Connection([
-        'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
-        'username' => 'root',
-        'password' => '',
-    ]);
+    $db = Yii::$app->db;
 
     $db->createCommand()->insert('user', [
         'user_name' => $this->user_name,

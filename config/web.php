@@ -18,6 +18,9 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'wlfhbweoeuiru384y73yi4',
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -44,7 +47,7 @@ $config = [
             ],
         ],
     ],
-        /*
+    /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -54,7 +57,7 @@ $config = [
         */
     'params' => $params,
 
-    
+
 ];
 
 if (YII_ENV_DEV) {

@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=127.0.0.1;dbname=php-ticketing',
-    'username' => 'root',
-    'password' => '',
+    'dsn' => 'pgsql:host=aws-0-eu-central-1.pooler.supabase.com;port=5432;dbname=postgres',
+    'username' => 'postgres.jctjpownwsrqoaikycia',
+    'password' => '8UyU2h6moedGzw7q',
     'charset' => 'utf8',
     // 'unix_socket'=> '/opt/lampp/var/mysql/mysql.sock',
 

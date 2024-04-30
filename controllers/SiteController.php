@@ -26,17 +26,7 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::class,
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
+            
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
@@ -69,11 +59,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $db = new Connection([
-            'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
-            'username' => 'root',
-            'password' => '',
-        ]);
+       $db = Yii::$app->db;
 
         $events = $db->createCommand('SELECT * FROM events')
             ->queryAll();
@@ -175,12 +161,8 @@ class SiteController extends Controller
 
             // Insert data into the database
             // Adjust this code based on your database schema
-            $db = new Connection([
-                'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
-                'username' => 'root',
-                'password' => '',
+            $db = Yii::$app->db;
 
-            ]);
 
             $db->createCommand()->insert('events', [
                 'event_name' => $model->event_name,
@@ -207,11 +189,7 @@ class SiteController extends Controller
             return $this->redirect(['site/ticket-object', 'name' => $model->name, 'email' => $model->email, 'cardName' => $cardName]);
         }
 
-        $db = new Connection([
-            'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
-            'username' => 'root',
-            'password' => '',
-        ]);
+       $db = Yii::$app->db;
 
         // Insert into the tickets table
         // Check if the user is logged in and Yii::$app->user->identity is not null
@@ -248,12 +226,8 @@ class SiteController extends Controller
 
     public function actionEvents()
     {
-        $db = new Connection([
-            'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
-            'username' => 'root',
-            'password' => '',
+        $db = Yii::$app->db;
 
-        ]);
 
         $events = $db->createCommand('SELECT * FROM events')->queryAll();
         return $this->render('events', ['events' => $events]);
@@ -264,11 +238,7 @@ class SiteController extends Controller
     public function actionTicketObject($name = null, $email = null, $cardName = null)
     {
 
-        $db = new Connection([
-            'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
-            'username' => 'root',
-            'password' => '',
-        ]);
+       $db = Yii::$app->db;
 
         $events = $db->createCommand('SELECT * FROM events')
             ->queryAll();
@@ -285,11 +255,7 @@ class SiteController extends Controller
     public function actionTesting()
     {
 
-        $db = new Connection([
-            'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
-            'username' => 'root',
-            'password' => '',
-        ]);
+       $db = Yii::$app->db;
 
         $events = $db->createCommand('SELECT * FROM events')->queryAll();
 
@@ -299,11 +265,7 @@ class SiteController extends Controller
     public function actionShowing()
     {
 
-        $db = new Connection([
-            'dsn' => 'mysql:host=localhost;dbname=php-ticketing',
-            'username' => 'root',
-            'password' => '',
-        ]);
+       $db = Yii::$app->db;
 
         $tickets = $db->createCommand('SELECT * FROM tickets')->queryAll();
 
